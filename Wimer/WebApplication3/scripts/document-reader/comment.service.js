@@ -52,4 +52,3 @@ var comments = [
     new comment_1.Comment(3, 'Comment Numero #3', 'What a love comment we have here. We might even make a separate page for it. It is indeed worth it\'s own page based on the length of this comment.', 400),
     new comment_1.Comment(4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu lacus leo. Nulla et massa cursus, lobortis ipsum non, convallis felis. Morbi eleifend quam quis nisl vestibulum.', 'What a love comment we have here.', 600),
 ];
-//# sourceMappingURL=comment.service.js.map

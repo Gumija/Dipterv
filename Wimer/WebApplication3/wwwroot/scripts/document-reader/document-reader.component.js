@@ -132,4 +132,3 @@ DocumentReaderComponent = __decorate([
     __metadata('design:paramtypes', [document_service_1.DocumentService, comment_service_1.CommentService, highlight_service_1.HighlightService, router_deprecated_1.RouteParams])
 ], DocumentReaderComponent);
 exports.DocumentReaderComponent = DocumentReaderComponent;
-//# sourceMappingURL=document-reader.component.js.map

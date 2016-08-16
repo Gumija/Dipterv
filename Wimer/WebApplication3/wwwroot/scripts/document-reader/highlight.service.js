@@ -49,4 +49,3 @@ var highlights = [
     new highlight_1.Highlight(1, 'rgba(100, 100, 255, 0.4)'),
     new highlight_1.Highlight(2, 'rgba(240, 0, 0, 0.4)'),
 ];
-//# sourceMappingURL=highlight.service.js.map
