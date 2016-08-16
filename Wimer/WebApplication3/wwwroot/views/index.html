@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set base for routing -->
+    <base href="/">
+    <!-- TODO: set title from angular -->
+    <title>WebSiteName</title>
+    <link href="styles/index.css" rel="stylesheet" />
+
+    <!-- Bootstrap tutorial -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="libs/jquery.js"></script>
+    <link href="libs/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="libs/bootstrap/js/bootstrap.js"></script>
+    <!-- <link href="libs/bootstrap/startbootstrap-freelancer-1.0.5/css/bootstrap.css" rel="stylesheet" /> -->
+    <!-- <script src="libs/bootstrap/startbootstrap-freelancer-1.0.5/js/bootstrap.js"></script> -->
+
+    <!-- 1. Load libraries -->
+    <script src="libs/es6-shim.min.js"></script>
+    <script src="libs/system.src.js"></script>
+    <script src="libs/Rx.js"></script>
+    <script src="libs/Reflect.js"></script>
+    <script src="libs/zone.js"></script>
+    <script src="libs/TextHighlighter.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="scripts/systemjs.config.js"></script>
+    <script>
+        System.import('scripts').catch(function (err) { console.error(err); });
+    </script>
+</head>
+<body>
+    <my-app></my-app>
+</body>
+</html>

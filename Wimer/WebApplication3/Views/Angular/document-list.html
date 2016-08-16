@@ -1,0 +1,110 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="addDocumentModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add new document</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-pills">
+                    <li class="active"><a data-toggle="tab" href="#txt">Text File</a></li>
+                    <li><a data-toggle="tab" href="#epub">EPUB File</a></li>
+                    <li><a data-toggle="tab" href="#pdf">PDF File</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="txt" class="tab-pane fade in active">
+                        <h3>Upload Text</h3>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="title">Title:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="title" placeholder="Enter Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="sub-title">Sub-title:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="sub-title" placeholder="Enter Sub-title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="text-file">File:</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" id="text-file">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="epub" class="tab-pane fade">
+                        <h3>Upload ePub</h3>
+                        <p>Not yet available.</p>
+                    </div>
+                    <div id="pdf" class="tab-pane fade">
+                        <h3>Upload Pdf</h3>
+                        <p>Not yet available.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <nav class="navbar navbar-inverse chooser-navbar">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><a data-toggle="modal" data-target="#addDocumentModal" href=""><span class="glyphicon glyphicon-plus"></span> Add new document</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a data-toggle="tab" href="#listview" aria-expanded="true"><span class="glyphicon glyphicon-list"></span> List view</a></li>
+                    <li><a data-toggle="tab" href="#thumbnailview"><span class="glyphicon glyphicon-th-large"></span> Thumbnails view</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div id="listview" class="tab-pane fade in active">
+                    <ul class="list-group">
+                        <a *ngFor="let doc of documentList" [routerLink]="['/DocumentReader', {id: doc.id}]" class="list-group-item">
+                            <img *ngIf="doc.coverImagePath!=''" class="list-style" src="{{doc.coverImagePath}}" />
+                            <span *ngIf="doc.coverImagePath==''" class="glyphicon glyphicon-book list-pic-alias"></span>
+                            <ul class="list-unstyled my-inline">
+                                <li>
+                                    <span><strong>{{doc.title}}</strong></span>
+                                </li>
+                                <li>
+                                    <span>{{doc.subtitle}}</span>
+                                </li>
+                            </ul>
+                        </a>
+                    </ul>
+                </div>
+                <div id="thumbnailview" class="tab-pane fade">
+                    <ul class="list-group">
+                        <a *ngFor="let doc of documentList" (click)="openDocument(doc.id)" class="text-center thumbnail-item list-group-item">
+                            <div class="thumbnail">
+                                <img *ngIf="doc.coverImagePath!=''" class="thumbnail-style" src="{{doc.coverImagePath}}" />
+                                <span *ngIf="doc.coverImagePath==''" class="glyphicon glyphicon-book thumbnail-pic-alias"></span>
+                                <p><strong>{{doc.title}}</strong></p>
+                            </div>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
