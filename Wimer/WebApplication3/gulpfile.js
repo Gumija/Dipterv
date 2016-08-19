@@ -109,11 +109,17 @@ gulp.task('clean:node_modules', function () {
 })
 
 gulp.task('compile:typescript', function () {
+    gulp.src('scripts/**/*.ts', { base: './scripts' })
+        .pipe(ts(ts.createProject('scripts/tsconfig.json'), null, ts.reporter.longReporter()))
+        .pipe(gulp.dest('scripts'));
+})
 
+// just an experiment, isn't too functional
+gulp.task('compile-with-sourcemaps:typescript', function () {
     var tsResult = gulp.src('scripts/**/*.ts', { base: './scripts' })
         .pipe(sourcemaps.init())    // This means sourcemaps will be generated
         .pipe(ts(ts.createProject('scripts/tsconfig.json')));
-
+    tsResult.dts.pipe(gulp.dest('scripts'));
     return tsResult.js
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('scripts'));

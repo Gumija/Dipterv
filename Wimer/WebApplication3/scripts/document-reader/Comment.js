@@ -11,3 +11,4 @@ class Comment {
     }
 }
 exports.Comment = Comment;
+//# sourceMappingURL=comment.js.map

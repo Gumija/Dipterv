@@ -31,3 +31,4 @@ var documentListElements = [
     new document_list_element_1.DocumentListElement(6, 'Burning Dragon Cities', 'Here comes the sun to take the dragons to burn the cities.', 'images/empty-schoolyard-30653-1920x1200.jpg')
 ];
 var documentListElementsPromise = Promise.resolve(documentListElements);
+//# sourceMappingURL=document-list-element.service.js.map

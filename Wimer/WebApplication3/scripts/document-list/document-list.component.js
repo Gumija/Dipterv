@@ -38,3 +38,4 @@ DocumentListComponent = __decorate([
     __metadata('design:paramtypes', [document_list_element_service_1.DocumentListElementService, router_deprecated_1.Router])
 ], DocumentListComponent);
 exports.DocumentListComponent = DocumentListComponent;
+//# sourceMappingURL=document-list.component.js.map

@@ -44,3 +44,4 @@ UploadComponent = __decorate([
     __metadata('design:paramtypes', [http_2.Http])
 ], UploadComponent);
 exports.UploadComponent = UploadComponent;
+//# sourceMappingURL=upload.component.js.map

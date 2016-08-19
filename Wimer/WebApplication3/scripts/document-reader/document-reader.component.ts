@@ -28,7 +28,6 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterCont
     showCommentEditor: boolean;
     hltr: any;
 
-    @ViewChild('div_document_content') divDocumentContent;
     @ViewChild('txt_presenter') txtPresenter;
 
     constructor(

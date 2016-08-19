@@ -6,3 +6,4 @@ class Highlight {
     }
 }
 exports.Highlight = Highlight;
+//# sourceMappingURL=highlight.js.map

@@ -141,10 +141,6 @@ let DocumentReaderComponent = class DocumentReaderComponent {
     }
 };
 __decorate([
-    core_1.ViewChild('div_document_content'), 
-    __metadata('design:type', Object)
-], DocumentReaderComponent.prototype, "divDocumentContent", void 0);
-__decorate([
     core_1.ViewChild('txt_presenter'), 
     __metadata('design:type', Object)
 ], DocumentReaderComponent.prototype, "txtPresenter", void 0);
@@ -159,3 +155,4 @@ DocumentReaderComponent = __decorate([
     __metadata('design:paramtypes', [document_service_1.DocumentService, comment_service_1.CommentService, highlight_service_1.HighlightService, router_deprecated_1.RouteParams])
 ], DocumentReaderComponent);
 exports.DocumentReaderComponent = DocumentReaderComponent;
+//# sourceMappingURL=document-reader.component.js.map

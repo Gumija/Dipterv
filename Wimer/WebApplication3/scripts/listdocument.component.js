@@ -33,3 +33,4 @@ ListDocumentComponent = __decorate([
     __metadata('design:paramtypes', [document_service_1.DocumentService])
 ], ListDocumentComponent);
 exports.ListDocumentComponent = ListDocumentComponent;
+//# sourceMappingURL=listdocument.component.js.map

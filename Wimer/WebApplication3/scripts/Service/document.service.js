@@ -24,7 +24,7 @@ let DocumentService = class DocumentService {
     }
     extractData(res) {
         if (res.status < 200 || res.status >= 300) {
-            throw new Error('Bad response status: ' + res.status);
+            throw new Error('Bad response statuss: ' + res.status);
         }
         let body = res.json();
         var list = [];
@@ -48,3 +48,4 @@ DocumentService = __decorate([
     __metadata('design:paramtypes', [http_1.Http])
 ], DocumentService);
 exports.DocumentService = DocumentService;
+//# sourceMappingURL=document.service.js.map

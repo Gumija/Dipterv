@@ -127,3 +127,4 @@ var documents = [
     new document_1.Document(5, 'Cities Burning Dragon', 'text/plain', 'Here comes the sun to take the dragons to burn the cities.'),
     new document_1.Document(6, 'Burning Dragon Cities', 'text/plain', 'Here comes the sun to take the dragons to burn the cities.')
 ];
+//# sourceMappingURL=document.service.js.map

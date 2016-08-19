@@ -23,3 +23,4 @@ NavBarComponent = __decorate([
     __metadata('design:paramtypes', [])
 ], NavBarComponent);
 exports.NavBarComponent = NavBarComponent;
+//# sourceMappingURL=nav-bar.component.js.map
