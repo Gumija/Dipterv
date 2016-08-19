@@ -8,7 +8,8 @@
     "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es6"
+    "target": "es6",
+    "sortOutput": true
   },
   "exclude": [
     "node_modules",

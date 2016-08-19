@@ -33,6 +33,7 @@
     "rimraf": "2.5.2",
 
     "gulp-typescript": "2.13.4",
+    "gulp-sourcemaps": "1.6.0",
     "del": "2.2.0",
 
     "concurrently": "2.1.0",

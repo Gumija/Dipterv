@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../typings/TextHighlighter.d.ts" />
 
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterContentInit, AfterViewChecked, ViewChild} from '@angular/core';
 import {FORM_DIRECTIVES} from '@angular/common';
 import {DocumentService} from './document.service';
 import {CommentService} from './comment.service';
@@ -19,7 +19,7 @@ import {NgIf} from '@angular/common';
     styleUrls: ['../../styles/document-reader.css'],
     directives: [NgIf, FORM_DIRECTIVES]
 })
-export class DocumentReaderComponent implements OnInit, AfterViewInit {
+export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterContentInit, AfterViewChecked  {
 
     document: Document;
     comments: Comment[];
@@ -27,6 +27,9 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit {
     tempComment: Comment;
     showCommentEditor: boolean;
     hltr: any;
+
+    @ViewChild('div_document_content') divDocumentContent;
+    @ViewChild('txt_presenter') txtPresenter;
 
     constructor(
         private documentService: DocumentService,
@@ -85,6 +88,7 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit {
             .then(
             doc => {
                 this.document = doc;
+                console.log('document set');
                 this.commentService.getComments(this.document.id)
                     .then(
                     comments => this.comments = comments
@@ -98,10 +102,35 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit {
 
         this.tempComment = new Comment(-1, "", "", 100);
         this.showCommentEditor = false;
+
+
     }
 
     ngAfterViewInit() {
-        //alert("initing");
+        console.log("View init");
+        //let txtPresenter = document.getElementById('txt-presenter');
+        //this.hltr = new TextHighlighter(txtPresenter);
+
+        //console.log('txtPresenter: ' + this.txtPresenter.nativeElement.value);
+        //console.log('divDocCont: ' + this.divDocumentContent.nativeElement.value);
+    }
+
+    ngAfterViewChecked()
+    {
+        console.log("View checked");
+        if (this.txtPresenter != undefined)
+        {
+            console.log('HEUREKAAAAAA!!!!!')
+        }
+        //let txtPresenter = document.getElementById('txt-presenter');
+        //this.hltr = new TextHighlighter(txtPresenter);
+
+        //console.log('txtPresenter: ' + this.txtPresenter.nativeElement.value);
+        //console.log('divDocCont: ' + this.divDocumentContent.nativeElement.value);
+    }
+
+    ngAfterContentInit() {
+        console.log("Content init");
         //let txtPresenter = document.getElementById('txt-presenter');
         //this.hltr = new TextHighlighter(txtPresenter);
     }
@@ -122,7 +151,8 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit {
     initHighlighter(color: string) {
         if (this.hltr == undefined) {
             if (this.document.mimetype == 'text/plain') {
-                this.hltr = new TextHighlighter(document.getElementById('txt-presenter'), { color: color });
+                //this.hltr = new TextHighlighter(document.getElementById('txt-presenter'), { color: color });
+                this.hltr = new TextHighlighter(this.txtPresenter.nativeElement, { color: color });
                 this.hltr.unbindEvents();
             }
         }

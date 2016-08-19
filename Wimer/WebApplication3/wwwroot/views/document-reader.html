@@ -18,8 +18,8 @@
                         <div class="col-md-8">
                             <div class="panel panel-default">
                                 <div class="panel-heading" id="my-title">{{document.title}}</div>
-                                <div class="panel-body">
-                                    <pre id="txt-presenter" *ngIf="document.mimetype=='text/plain'">
+                                <div class="panel-body" id="div-document-content" #div_document_content>
+                                    <pre id="txt-presenter" *ngIf="document.mimetype=='text/plain'" #txt_presenter>
                                     {{document.content}}
                                     </pre>
                                     <span *ngIf="document.mimetype=='text/html'">

@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='' AfterBuild='copyFilesToServer' Clean='clean' />
+﻿/// <binding BeforeBuild='compile:typescript' AfterBuild='copyFilesToServer' Clean='clean' />
 "use strict";
 
 var gulp = require("gulp"),
@@ -8,6 +8,7 @@ var gulp = require("gulp"),
     uglify = require("gulp-uglify");
 var ts = require("gulp-typescript");
 var del = require('del');
+var sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
     webroot: "./wwwroot/"
@@ -108,8 +109,13 @@ gulp.task('clean:node_modules', function () {
 })
 
 gulp.task('compile:typescript', function () {
-    gulp.src('scripts/**/*.ts', { base: './scripts' })
-        .pipe(ts(ts.createProject('scripts/tsconfig.json')))
+
+    var tsResult = gulp.src('scripts/**/*.ts', { base: './scripts' })
+        .pipe(sourcemaps.init())    // This means sourcemaps will be generated
+        .pipe(ts(ts.createProject('scripts/tsconfig.json')));
+
+    return tsResult.js
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('scripts'));
 })
 

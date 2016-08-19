@@ -67,6 +67,7 @@ let DocumentReaderComponent = class DocumentReaderComponent {
         this.documentService.getDocument(id)
             .then(doc => {
             this.document = doc;
+            console.log('document set');
             this.commentService.getComments(this.document.id)
                 .then(comments => this.comments = comments);
         });
@@ -76,7 +77,24 @@ let DocumentReaderComponent = class DocumentReaderComponent {
         this.showCommentEditor = false;
     }
     ngAfterViewInit() {
-        //alert("initing");
+        console.log("View init");
+        //let txtPresenter = document.getElementById('txt-presenter');
+        //this.hltr = new TextHighlighter(txtPresenter);
+        //console.log('txtPresenter: ' + this.txtPresenter.nativeElement.value);
+        //console.log('divDocCont: ' + this.divDocumentContent.nativeElement.value);
+    }
+    ngAfterViewChecked() {
+        console.log("View checked");
+        if (this.txtPresenter != undefined) {
+            console.log('HEUREKAAAAAA!!!!!');
+        }
+        //let txtPresenter = document.getElementById('txt-presenter');
+        //this.hltr = new TextHighlighter(txtPresenter);
+        //console.log('txtPresenter: ' + this.txtPresenter.nativeElement.value);
+        //console.log('divDocCont: ' + this.divDocumentContent.nativeElement.value);
+    }
+    ngAfterContentInit() {
+        console.log("Content init");
         //let txtPresenter = document.getElementById('txt-presenter');
         //this.hltr = new TextHighlighter(txtPresenter);
     }
@@ -92,7 +110,8 @@ let DocumentReaderComponent = class DocumentReaderComponent {
     initHighlighter(color) {
         if (this.hltr == undefined) {
             if (this.document.mimetype == 'text/plain') {
-                this.hltr = new TextHighlighter(document.getElementById('txt-presenter'), { color: color });
+                //this.hltr = new TextHighlighter(document.getElementById('txt-presenter'), { color: color });
+                this.hltr = new TextHighlighter(this.txtPresenter.nativeElement, { color: color });
                 this.hltr.unbindEvents();
             }
         }
@@ -121,6 +140,14 @@ let DocumentReaderComponent = class DocumentReaderComponent {
         }
     }
 };
+__decorate([
+    core_1.ViewChild('div_document_content'), 
+    __metadata('design:type', Object)
+], DocumentReaderComponent.prototype, "divDocumentContent", void 0);
+__decorate([
+    core_1.ViewChild('txt_presenter'), 
+    __metadata('design:type', Object)
+], DocumentReaderComponent.prototype, "txtPresenter", void 0);
 DocumentReaderComponent = __decorate([
     core_1.Component({
         //selector: 'document-list',
