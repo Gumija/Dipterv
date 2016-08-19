@@ -1,6 +1,6 @@
 /// <reference path="../../typings/TextHighlighter.d.ts" />
 
-import {Component, OnInit, AfterViewInit, AfterContentInit, AfterViewChecked, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit, AfterContentInit, AfterViewChecked, ViewChild, Renderer} from '@angular/core';
 import {FORM_DIRECTIVES} from '@angular/common';
 import {DocumentService} from './document.service';
 import {CommentService} from './comment.service';
@@ -19,7 +19,7 @@ import {NgIf} from '@angular/common';
     styleUrls: ['../../styles/document-reader.css'],
     directives: [NgIf, FORM_DIRECTIVES]
 })
-export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterContentInit, AfterViewChecked  {
+export class DocumentReaderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     document: Document;
     comments: Comment[];
@@ -27,15 +27,22 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterCont
     tempComment: Comment;
     showCommentEditor: boolean;
     hltr: any;
+    addCommentVisibility: string;
+    addCommentLeft: string;
+    addCommentTop: string;
+    firstLoad: boolean;
 
-    @ViewChild('div_document_content') divDocumentContent;
+    globalListenSelectionChange: Function;
+
     @ViewChild('txt_presenter') txtPresenter;
+    @ViewChild('comment_column') commentColumn;
 
     constructor(
         private documentService: DocumentService,
         private commentService: CommentService,
         private highlightService: HighlightService,
-        private routeParams: RouteParams
+        private routeParams: RouteParams,
+        private renderer: Renderer
     ) { }
 
     editComment(comment: Comment) {
@@ -52,7 +59,7 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterCont
                 this.resetTempComment();
                 let top =
                     window.getSelection().getRangeAt(0).getBoundingClientRect().top
-                    - document.getElementById('comment-column').getBoundingClientRect().top;
+                    - this.commentColumn.nativeElement.getBoundingClientRect().top;
                 this.tempComment.top = top;
                 this.showCommentEditor = true;
             }
@@ -88,7 +95,6 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterCont
             .then(
             doc => {
                 this.document = doc;
-                console.log('document set');
                 this.commentService.getComments(this.document.id)
                     .then(
                     comments => this.comments = comments
@@ -103,36 +109,52 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterCont
         this.tempComment = new Comment(-1, "", "", 100);
         this.showCommentEditor = false;
 
+        this.addCommentLeft = '1123px';
+        this.addCommentTop = '100px';
+        this.addCommentVisibility = 'visible';
 
+        this.firstLoad = true;
     }
-
-    ngAfterViewInit() {
-        console.log("View init");
-        //let txtPresenter = document.getElementById('txt-presenter');
-        //this.hltr = new TextHighlighter(txtPresenter);
-
-        //console.log('txtPresenter: ' + this.txtPresenter.nativeElement.value);
-        //console.log('divDocCont: ' + this.divDocumentContent.nativeElement.value);
-    }
-
-    ngAfterViewChecked()
-    {
+    ngAfterViewChecked() {
         console.log("View checked");
-        if (this.txtPresenter != undefined)
-        {
+        if (this.txtPresenter != undefined && this.firstLoad) {
             console.log('HEUREKAAAAAA!!!!!')
+            this.globalListenSelectionChange = this.renderer.listenGlobal('document', 'selectionchange', (event) => {
+                console.log(event);
+                if (event.path[1].getSelection() != 0 &&                                  // event.path[1] is the window. Highlighing removes selection, might go to NPE here with getRangeAt(0)
+                    this.isPartOfDocument(event.path[1].getSelection().getRangeAt(0)) &&  // event.path[1] is the window
+                    this.isRealSelection(event.path[1].getSelection().getRangeAt(0))) {   // test for a single click
+                    this.moveAddCommentButton(event.path[1].getSelection().getRangeAt(0));
+                }
+                else {
+                    this.hideAddCommentButton();
+                }
+            });
+            this.firstLoad = false;
         }
-        //let txtPresenter = document.getElementById('txt-presenter');
         //this.hltr = new TextHighlighter(txtPresenter);
-
-        //console.log('txtPresenter: ' + this.txtPresenter.nativeElement.value);
-        //console.log('divDocCont: ' + this.divDocumentContent.nativeElement.value);
     }
 
-    ngAfterContentInit() {
-        console.log("Content init");
-        //let txtPresenter = document.getElementById('txt-presenter');
-        //this.hltr = new TextHighlighter(txtPresenter);
+    isRealSelection(sel: Selection) {
+        return sel.toString().length > 0;
+    }
+
+    isPartOfDocument(sel): boolean {
+        return this.txtPresenter.nativeElement.contains(sel.commonAncestorContainer);
+    }
+
+    hideAddCommentButton() {
+        this.addCommentVisibility = 'hidden';
+    }
+
+    moveAddCommentButton(range: Range) {
+        this.addCommentVisibility = 'visible';
+        this.addCommentTop = (range.getBoundingClientRect().top - 60) + 'px';
+    }
+
+    ngOnDestroy() {
+        // Removes "listenGlobal" listener
+        this.globalListenSelectionChange();
     }
 
     resetTempComment() {
@@ -151,7 +173,6 @@ export class DocumentReaderComponent implements OnInit, AfterViewInit, AfterCont
     initHighlighter(color: string) {
         if (this.hltr == undefined) {
             if (this.document.mimetype == 'text/plain') {
-                //this.hltr = new TextHighlighter(document.getElementById('txt-presenter'), { color: color });
                 this.hltr = new TextHighlighter(this.txtPresenter.nativeElement, { color: color });
                 this.hltr.unbindEvents();
             }

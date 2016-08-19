@@ -13,7 +13,7 @@ export class CommentService {
     }
 
     addComment(comment: Comment, docId: number) {
-        var id;
+        var id : number;
         if (comments.length != 0) {
             id = comments[comments.length - 1].id + 1;
         } else {

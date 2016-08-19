@@ -13,7 +13,7 @@ export class HighlightService {
     }
 
     addHighlight(highlight: Highlight, userId: number) {
-        var id;
+        var id: number;
         if (highlights.length != 0) {
             id = highlights[highlights.length - 1].id + 1;
         } else {
@@ -40,5 +40,5 @@ export class HighlightService {
 var highlights = [
     new Highlight(1, 'rgba(100, 100, 255, 0.4)'),
     new Highlight(2, 'rgba(240, 0, 0, 0.4)'),
-    
+
 ];

@@ -30,9 +30,16 @@
                                     </span>
                                 </div>
                             </div>
+                            <button class="btn btn-danger add-comment-moving"
+                                    (click)="addComment()"
+                                    [style.visibility]="addCommentVisibility"
+                                    [style.left]="addCommentLeft"
+                                    [style.top]="addCommentTop">
+                                <span class="glyphicon glyphicon-comment"></span>
+                            </button>
                         </div>
                         <!-- Display comments -->
-                        <div id="comment-column" class="col-md-4">
+                        <div #comment_column id="comment-column" class="col-md-4">
                             <!--<button class="btn btn-danger" style="position:fixed; z-index:4;" (click)="highlightSelection()"><span class="glyphicon glyphicon-pencil"></span> Highlight On: </button>-->
                             <button class="btn btn-danger" style="position:fixed; z-index:4;" (click)="addComment()"><span class="glyphicon glyphicon-comment"></span> Add Comment</button>
 

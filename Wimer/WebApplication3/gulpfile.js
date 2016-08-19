@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='compile:typescript' AfterBuild='copyFilesToServer' Clean='clean' />
+/// <binding AfterBuild='copyFilesToServer' />
 "use strict";
 
 var gulp = require("gulp"),

@@ -161,4 +161,9 @@ fieldset[disabled] .btn-hl-red.focus {
   background-color: black;
 }
 
+.add-comment-moving {
+    position: absolute;
+    z-index: 4;
+}
+
 /* End of button */
