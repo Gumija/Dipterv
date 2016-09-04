@@ -22,8 +22,16 @@
     position: fixed;
 }
 
+.document-presenter {
+    /*float: left;*/
+    margin-left: 60px;
+    width: 740px;
+    position: absolute;
+    box-sizing: border-box;
+}
+
 .my-fluid {
-    padding-left: 60px;
+    padding-left: 800px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;

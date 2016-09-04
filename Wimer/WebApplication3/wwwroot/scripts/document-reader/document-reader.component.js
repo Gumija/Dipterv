@@ -75,17 +75,18 @@ let DocumentReaderComponent = class DocumentReaderComponent {
             .then(highlights => this.highlights = highlights);
         this.tempComment = new comment_1.Comment(-1, "", "", 100);
         this.showCommentEditor = false;
-        this.addCommentLeft = '1123px';
+        // this.addCommentLeft = '1123px'; 
         this.addCommentTop = '100px';
-        this.addCommentVisibility = 'visible';
+        this.addCommentVisibility = 'hidden';
         this.firstLoad = true;
+        this.firstSelectionDone = false;
     }
     ngAfterViewChecked() {
         console.log("View checked");
         if (this.txtPresenter != undefined && this.firstLoad) {
-            console.log('HEUREKAAAAAA!!!!!');
             this.globalListenSelectionChange = this.renderer.listenGlobal('document', 'selectionchange', (event) => {
                 console.log(event);
+                this.firstSelectionDone = true;
                 if (event.path[1].getSelection() != 0 &&
                     this.isPartOfDocument(event.path[1].getSelection().getRangeAt(0)) &&
                     this.isRealSelection(event.path[1].getSelection().getRangeAt(0))) {
@@ -110,7 +111,8 @@ let DocumentReaderComponent = class DocumentReaderComponent {
     }
     moveAddCommentButton(range) {
         this.addCommentVisibility = 'visible';
-        this.addCommentTop = (range.getBoundingClientRect().top - 60) + 'px';
+        this.addCommentTop = (range.getBoundingClientRect().top -
+            this.documentColumn.nativeElement.getBoundingClientRect().top) + 'px';
     }
     ngOnDestroy() {
         // Removes "listenGlobal" listener
@@ -165,6 +167,10 @@ __decorate([
     core_1.ViewChild('comment_column'), 
     __metadata('design:type', Object)
 ], DocumentReaderComponent.prototype, "commentColumn", void 0);
+__decorate([
+    core_1.ViewChild('document_column'), 
+    __metadata('design:type', Object)
+], DocumentReaderComponent.prototype, "documentColumn", void 0);
 DocumentReaderComponent = __decorate([
     core_1.Component({
         //selector: 'document-list',

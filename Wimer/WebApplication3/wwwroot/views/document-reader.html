@@ -9,37 +9,38 @@
             <button class="highlight-button btn btn-primary text-center"><span class="glyphicon glyphicon-plus"></span></button>
         </div>
     </div>
+    <div #document_column *ngIf="document" class="document-presenter">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="my-title">{{document.title}}</div>
+            <div class="panel-body" id="div-document-content" #div_document_content>
+                <pre id="txt-presenter" *ngIf="document.mimetype=='text/plain'" #txt_presenter>
+                                    {{document.content}}
+                                    </pre>
+                <span *ngIf="document.mimetype=='text/html'">
+                    Cannot diplay this type of file yet, sorry!!! :/
+                </span>
+                <span *ngIf="document.mimetype=='application/epub+zip'">
+                    Cannot diplay this type of file yet, sorry!!! :/
+                </span>
+            </div>
+        </div>
+        <button class="btn btn-danger add-comment-moving"
+                *ngIf="firstSelectionDone"
+                (click)="addComment()"
+                [style.visibility]="addCommentVisibility"
+                [style.left]="txtPresenter.nativeElement.clientWidth"
+                [style.top]="addCommentTop">
+            <span class="glyphicon glyphicon-comment"></span>
+        </button>
+    </div>
     <div class="row-fluid my-fluid">
-        <!-- Display document and comments -->
+        <!-- Display comments -->
         <div *ngIf="document" class="tab-content col-md-12">
             <div class="tab-pane fade in active">
                 <div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" id="my-title">{{document.title}}</div>
-                                <div class="panel-body" id="div-document-content" #div_document_content>
-                                    <pre id="txt-presenter" *ngIf="document.mimetype=='text/plain'" #txt_presenter>
-                                    {{document.content}}
-                                    </pre>
-                                    <span *ngIf="document.mimetype=='text/html'">
-                                        Cannot diplay this type of file yet, sorry!!! :/
-                                    </span>
-                                    <span *ngIf="document.mimetype=='application/epub+zip'">
-                                        Cannot diplay this type of file yet, sorry!!! :/
-                                    </span>
-                                </div>
-                            </div>
-                            <button class="btn btn-danger add-comment-moving"
-                                    (click)="addComment()"
-                                    [style.visibility]="addCommentVisibility"
-                                    [style.left]="addCommentLeft"
-                                    [style.top]="addCommentTop">
-                                <span class="glyphicon glyphicon-comment"></span>
-                            </button>
-                        </div>
+                    <div class="row">                
                         <!-- Display comments -->
-                        <div #comment_column id="comment-column" class="col-md-4">
+                        <div #comment_column id="comment-column" class="col-md-12">
                             <!--<button class="btn btn-danger" style="position:fixed; z-index:4;" (click)="highlightSelection()"><span class="glyphicon glyphicon-pencil"></span> Highlight On: </button>-->
                             <button class="btn btn-danger" style="position:fixed; z-index:4;" (click)="addComment()"><span class="glyphicon glyphicon-comment"></span> Add Comment</button>
 

@@ -31,11 +31,13 @@ export class DocumentReaderComponent implements OnInit, OnDestroy, AfterViewChec
     addCommentLeft: string;
     addCommentTop: string;
     firstLoad: boolean;
+    firstSelectionDone: boolean;
 
     globalListenSelectionChange: Function;
 
     @ViewChild('txt_presenter') txtPresenter;
     @ViewChild('comment_column') commentColumn;
+    @ViewChild('document_column') documentColumn;
 
     constructor(
         private documentService: DocumentService,
@@ -109,18 +111,19 @@ export class DocumentReaderComponent implements OnInit, OnDestroy, AfterViewChec
         this.tempComment = new Comment(-1, "", "", 100);
         this.showCommentEditor = false;
 
-        this.addCommentLeft = '1123px';
+         // this.addCommentLeft = '1123px'; 
         this.addCommentTop = '100px';
-        this.addCommentVisibility = 'visible';
+        this.addCommentVisibility = 'hidden';
 
         this.firstLoad = true;
+        this.firstSelectionDone = false;
     }
     ngAfterViewChecked() {
         console.log("View checked");
         if (this.txtPresenter != undefined && this.firstLoad) {
-            console.log('HEUREKAAAAAA!!!!!')
             this.globalListenSelectionChange = this.renderer.listenGlobal('document', 'selectionchange', (event) => {
                 console.log(event);
+                this.firstSelectionDone = true;
                 if (event.path[1].getSelection() != 0 &&                                  // event.path[1] is the window. Highlighing removes selection, might go to NPE here with getRangeAt(0)
                     this.isPartOfDocument(event.path[1].getSelection().getRangeAt(0)) &&  // event.path[1] is the window
                     this.isRealSelection(event.path[1].getSelection().getRangeAt(0))) {   // test for a single click
@@ -149,7 +152,8 @@ export class DocumentReaderComponent implements OnInit, OnDestroy, AfterViewChec
 
     moveAddCommentButton(range: Range) {
         this.addCommentVisibility = 'visible';
-        this.addCommentTop = (range.getBoundingClientRect().top - 60) + 'px';
+        this.addCommentTop = (range.getBoundingClientRect().top - 
+            this.documentColumn.nativeElement.getBoundingClientRect().top) + 'px';
     }
 
     ngOnDestroy() {
